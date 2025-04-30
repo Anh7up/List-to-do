@@ -3,67 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo list</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/63a5f3f034.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Check list to do</h1> 
-    <div class="open-form">
-        <p>Add task</p>
-        <i class="fa-regular fa-pen-to-square"></i>
+    <h1>Check list to do</h1>
+    <div class="bar">
+        <div class="sort">
+            <label for="task-sort">SORT</label>
+            <select id="task-sort">
+                <option value="" display="none">Chose option</option>
+                <option value="az">Name A-Z</option>
+                <option value="za">Name Z-A</option>
+            </select> 
+        </div>
+        <input placeholder="Search..." id="search-task" type="text">
+        <button id="open-form"><p>Add task</p><i class="fa-regular fa-pen-to-square"></i></button> 
     </div>
-    <div class="sort">
-        <label for="task-sort" style="margin-left: 40px;font: size 16px;">SORT</label>
-        <br>
-        <select id="task-sort">
-            <option value="" style="display:none"></option>
-            <option value="name">Sort by Name</option>
-            <option value="time">Sort by Time</option>
-        </select> 
-    </div> 
-    <input type="sreach" placeholder="sreach" id="search-task">
-        <ul class= "list">
-     <li>
-            <div class="check-box">
-                <input type="checkbox"  id="task-name-0">
-                <label for="task-name-0">Go to ...</label>
-                <p class="time">
-                    10:00
-                </p>
-                <button class="edit"><i class="fa-solid fa-square-pen"></i></button>
-                <button class="delete">X</button>
 
-          </div>
-        </li>         
+    <div id="no-task">NO TASK</div> 
+    <ul class="list">
     </ul>
-    <form class="popup-form">
+
+    <form id="add-task-form">
         <h2>Form add task</h2>
-        <label for="task-name" class="name-task">Name task</label>
-        <input type="text" id="task-name" placeholder="Pls enter name task">
+        <div class="name-list">
+            <label for="task-name" class="name-task">Name task: </label>
+            <input type="text" id="task-name" placeholder="Please enter name task">
+        </div>
         <div class="time-list">
-            <label for="time">Thời gian:</label>
+            <label for="time">Time task:</label>
             <input type="time" id="time" name="time">
         </div>
         <div class="button-group">
-            <button class="add-task">SUBMIT</button>
-            <button class="cancel">X</button>
-        </div>
-    </form>
-    <form class="edit-form">
-        <h2>Form edit task</h2>
-        <label for="edit-value-name" class="name-task">Name task</label>
-        <input type="text" id="edit-value-name" placeholder="Pls enter new name task">
-        <div class="time-list">
-            <label for="edit-value-time">Thời gian:</label>
-            <input type="time" id="edit-value-time" name="time">
-        </div>
-        <div class="button-group">
-            <button class="submit-edit">SUBMIT</button>
-            <button class="cancel-edit">X</button>
+            <button type="submit" id="add-task">SUBMIT</button>
+            <button type="button" id="cancel-add">X</button>
         </div>
     </form>
 
+    <form id="edit-form">
+        <h2>Form edit task</h2>
+        <div class="name-list">
+            <label for="edit-value-name" class="name-task">Name task: </label>
+            <input type="text" id="edit-value-name" placeholder="Please enter new name task">
+        </div>
+        <div class="time-list">
+            <label for="edit-value-time">Time:</label>
+            <input type="time" id="edit-value-time" name="time">
+        </div>
+        <div class="button-group">
+            <button type="submit" id="submit-edit">SUBMIT</button>
+            <button type="button" id="cancel-edit">X</button>
+        </div>
+    </form>
+
+    <script src="index.js"></script>
 </body>
-<script src="index.js"></script>
 </html>
