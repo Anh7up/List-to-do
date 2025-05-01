@@ -88,12 +88,12 @@ li {
     width: 27em;
     font-size: 1.5rem;
 }
-.check-box {
+#check-box {
     display: flex;
     align-items: center;
     gap: 5em; 
 }
-.check-box label {
+#check-box label {
     max-width: 25rem;
     overflow: hidden;
     text-overflow: ellipsis;

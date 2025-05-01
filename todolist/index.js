@@ -1,7 +1,8 @@
 let tasks = [];
 let editingIndex = null; 
 const searchTask = document.getElementById("search-task");
-const noTaskDiv = document.getElementById('no-task');
+const noTaskDiv = document.getElementById('no-task');        
+
 
 if (localStorage.getItem('tasks')) {
     tasks = JSON.parse(localStorage.getItem('tasks'));
@@ -29,6 +30,24 @@ document.querySelector('.list').addEventListener('click', function (e) {
         editingIndex = taskIndex;
         document.getElementById('edit-form').style.display = 'block';
     }
+    if(e.target.closest("input[type='checkbox']")){
+        let checked = e.target.checked; 
+        const divTask = document.getElementById('check-box');
+        const divAction = document.getElementById('action');
+
+        if(checked)  {
+            divTask.style.textDecoration = 'line-through';
+            divTask.style.opacity = '0.4';
+            divAction.style.textDecoration = 'none';
+            divAction.style.opacity = '1'
+        }
+        else {
+            divTask.style.textDecoration = 'none';
+            divTask.style.opacity = '1';
+        }
+
+    }
+    
 });
 
 document.getElementById('edit-form').addEventListener('submit', function (e) {
@@ -51,10 +70,10 @@ function updateTaskList() {
     tasks.forEach((task, index) => {
         const li = document.createElement('li');
         li.innerHTML = `
-            <div class="check-box">
+            <div id="check-box">
                 <label for="task-name-${index}">${task.name}</label>
                 <p class="time">${task.time}</p>
-                <div class="action">
+                <div id="action">
                     <button id="edit"><i class="fa-solid fa-square-pen"></i></button>
                     <button id="delete">X</button>
                     <input type="checkbox" id="task-name-${index}">
