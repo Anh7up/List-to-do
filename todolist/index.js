@@ -3,52 +3,59 @@ let editingIndex = null;
 const searchTask = document.getElementById("search-task");
 const noTaskDiv = document.getElementById('no-task');        
 
-
 if (localStorage.getItem('tasks')) {
     tasks = JSON.parse(localStorage.getItem('tasks'));
     updateTaskList();
 }
 checkTaskList();
 
-document.querySelector('.list').addEventListener('click', function (e) {
-    if (e.target.closest('#delete')) {
-        let taskItem = e.target.closest('li');
-        let taskIndex = Array.from(taskItem.parentElement.children).indexOf(taskItem);
-        tasks.splice(taskIndex, 1);
-        saveTasks();
-        updateTaskList();
+function deleteTask(taskIndex) {
+    tasks.splice(taskIndex, 1);
+    saveTasks();
+    updateTaskList();
+}
+function editTask(taskIndex) {
+    const task = tasks[taskIndex];
+    document.getElementById('edit-value-name').value = task.name;
+    document.getElementById('edit-value-time').value = task.time;
+
+    editingIndex = taskIndex;
+    document.getElementById('edit-form').style.display = 'block';
+}
+
+function toggleTaskCompletion(taskIndex, isChecked) {
+    const taskItem = document.querySelector(`li[data-index="${taskIndex}"]`);
+    if (isChecked) {
+        taskItem.classList.add('completed');
+        taskItem.style.opacity = '0.4';
+    } else {
+        taskItem.classList.remove('completed');
+        taskItem.style.opacity = '1';
     }
+}
 
-    if (e.target.closest('#edit')) {
-        let taskItem = e.target.closest('li');
-        let taskIndex = Array.from(taskItem.parentElement.children).indexOf(taskItem);
+function updateTaskList() {
+    const taskList = document.querySelector('.list');
+    taskList.innerHTML = '';
 
-        const task = tasks[taskIndex];
-        document.getElementById('edit-value-name').value = task.name;
-        document.getElementById('edit-value-time').value = task.time;
+    tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.id = 'check-box';
+        li.setAttribute('data-index', index);
+        li.innerHTML = `
+            <label for="task-name-${index}">${task.name}</label>
+            <p class="time">${task.time}</p>
+            <div id="action">
+                <button id="edit" onclick="editTask(${index})"><i class="fa-solid fa-square-pen"></i></button>
+                <button id="delete" onclick="deleteTask(${index})">X</button>
+                <input type="checkbox" id="task-name-${index}" onchange="toggleTaskCompletion(${index}, this.checked)">
+            </div>
+        `;
+        taskList.appendChild(li);
+    });
 
-        editingIndex = taskIndex;
-        document.getElementById('edit-form').style.display = 'block';
-    }
-    if(e.target.closest("input[type='checkbox']")){
-        let checked = e.target.checked; 
-        const divTask = document.getElementById('check-box');
-        const divAction = document.getElementById('action');
-
-        if(checked)  {
-            divTask.style.textDecoration = 'line-through';
-            divTask.style.opacity = '0.4';
-            divAction.style.textDecoration = 'none';
-            divAction.style.opacity = '1'
-        }
-        else {
-            divTask.style.textDecoration = 'none';
-            divTask.style.opacity = '1';
-        }
-
-    }
-    
-});
+    checkTaskList();
+}
 
 document.getElementById('edit-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -62,29 +69,6 @@ document.getElementById('edit-form').addEventListener('submit', function (e) {
         editingIndex = null;
     }
 });
-
-function updateTaskList() {
-    const taskList = document.querySelector('.list');
-    taskList.innerHTML = '';
-
-    tasks.forEach((task, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <div id="check-box">
-                <label for="task-name-${index}">${task.name}</label>
-                <p class="time">${task.time}</p>
-                <div id="action">
-                    <button id="edit"><i class="fa-solid fa-square-pen"></i></button>
-                    <button id="delete">X</button>
-                    <input type="checkbox" id="task-name-${index}">
-                </div>
-            </div>
-        `;
-        taskList.appendChild(li);
-    });
-
-    checkTaskList();
-}
 
 document.getElementById('add-task-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -128,7 +112,6 @@ searchTask.addEventListener("input", function () {
 
     allTask.forEach(function (task) {
         const taskName = task.querySelector("label").innerText.toLowerCase();
-        
         if (taskName.includes(inputSearch)) {
             task.style.display = "block";
         } else {
