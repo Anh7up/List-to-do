@@ -1,13 +1,234 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+html {
+  font-size: 16px;
+}
+body {
+  font-family: cursive;
+  font-size: 1rem;
+  background: #f9f9f9;
+  color: #333;
+  background-image: linear-gradient(#ddd 1px, transparent 1px),
+    linear-gradient(90deg, #ddd 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+#no-task {
+  text-align: center;
+  font-size: 4rem;
+  margin: 3rem;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/*-------------- BAR---------------- */
+h1 {
+  font-size: 2.5rem;
+  color: rgb(255, 0, 43);
+  text-align: center;
 }
+.bar {
+  display: flex;
+  gap: 5rem;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1rem;
+}
+.sort label {
+  font-size: 1.3rem;
+  padding-right: 0.5rem;
+}
+select#task-sort {
+  width: 8.2em;
+  height: 2em;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-family: cursive;
+  border: 0.125rem solid;
+}
+#search-task {
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  font-family: cursive;
+  border: 2px solid black;
+  border-radius: 11px;
+  background-color: #fefefe;
+  height: 2.4em;
+  width: 12em;
+}
+i.fa-regular.fa-pen-to-square {
+  padding: 0.5rem;
+}
+#open-form {
+  font-size: 2rem;
+  font-family: cursive;
+  border: none;
+  background: transparent;
+  display: flex;
+}
+/* ----------END BAR -------------- */
+
+
+
+/*----------TASK----------- */
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 4.3rem;
+}
+li {
+  padding: 0.12em;
+  border-bottom: 1.5px solid black;
+  width: 27em;
+  font-size: 1.5rem;
+}
+li.completed {
+  position: relative;
+}
+li.completed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 2px solid black;
+  width: 100%;
+}
+#check-box {
+  display: flex;
+  align-items: center;
+  gap: 5em;
+}
+input[type="checkbox" i] {
+  transform: scale(1.3);
+}
+
+
+#check-box label {
+  max-width: 25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+.task-done {
+  position: relative;
+  opacity : 0.6;
+}
+.task-done::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: gray;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+button#edit {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  padding-right: 1em;
+}
+#delete {
+  color: red;
+  border: none;
+  font-size: 20px;
+  padding-right: 1em;
+}
+/* -------------END TASK------------ */
+
+.task-content.completed {
+  position: relative;
+}
+.task-content.completed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 2px solid #888;
+  width: 100%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* -------------FORM POPUP----------- */
+form {
+  font-family: cursive;
+  background-color: #ccc;
+  border: 1px solid black;
+  position: absolute;
+  top: 10rem;
+  left: 31rem;
+  /* display: none; */
+  flex-direction: column;
+  width: 25em;
+  height: 17em;
+}
+.form-add-task {
+    display: flex!important;
+}
+h2 {
+  text-align: center;
+}
+button#cancel-add,
+#cancel-edit {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 1.25rem;
+}
+#add-task,
+#submit-edit {
+  padding: 0 7.5em;
+  font-family: cursive;
+  font-size: 1rem;
+  margin-top: 3em;
+  border: 2px solid black;
+  border-radius: 7px;
+  margin: 3em 0 0 2.77em;
+}
+#add-task:hover {
+  background-color: rgb(77, 77, 77);
+  color: whitesmoke;
+}
+#submit-edit:hover {
+  background-color: rgb(77, 77, 77);
+  color: whitesmoke;
+}
+.name-list {
+  margin: 3em 4em 1em;
+}
+.time-list {
+  margin: 0 0 1em 4em;
+}
+input[type="time"] {
+  border: none;
+  font-size: 1rem;
+  border-bottom: 2px solid black;
+  background: transparent;
+  padding: 0 2em 0.01em;
+  outline: none;
+}
+#task-name,
+#edit-value-name {
+  border: none;
+  border-bottom: 2px solid black;
+  outline: none;
+  width: 10.6rem;
+  padding: 2px 0;
+  background: transparent;
+  height: auto;
+}
+
+/* --------------END FORM--------- */
